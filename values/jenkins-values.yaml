@@ -1,0 +1,9 @@
+controller:
+  adminUser: admin
+  adminPassword: admin
+  installPlugins:
+    - kubernetes
+    - workflow-aggregator
+    - git
+    - prometheus
+    - junit

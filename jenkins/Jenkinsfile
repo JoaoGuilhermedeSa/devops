@@ -1,0 +1,32 @@
+pipeline {
+  agent any
+  tools {
+    maven 'Maven 3.8.6'
+  }
+
+  stages {
+    stage('Build') {
+      steps {
+        sh './mvnw clean package -DskipTests'
+      }
+    }
+
+    stage('Test') {
+      steps {
+        sh './mvnw test'
+      }
+    }
+
+    stage('Deploy') {
+      steps {
+        sh 'helm upgrade --install myapp ./helm/myapp --namespace apps'
+      }
+    }
+  }
+
+  post {
+    failure {
+      echo 'Pipeline failed.'
+    }
+  }
+}

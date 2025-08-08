@@ -1,0 +1,25 @@
+pipeline {
+  agent any
+  stages {
+    stage('Build') {
+      steps {
+        echo 'Build Stage'
+      }
+    }
+    stage('Test') {
+      steps {
+        sh './tests/test_app.sh'
+      }
+    }
+    stage('Deploy') {
+      steps {
+        sh 'helm upgrade --install myapp ./helm/myapp --namespace apps'
+      }
+    }
+  }
+  post {
+    failure {
+      echo 'Pipeline failed.'
+    }
+  }
+}
